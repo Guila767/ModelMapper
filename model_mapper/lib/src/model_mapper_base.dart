@@ -10,12 +10,23 @@ abstract class IModelBase {
 }
 
 abstract class IModelMapperFactory {
-  IModelFactory<T>? get<T extends IModelBase>();
+  IModelFactory<T> get<T extends IModelBase>();
 }
 
 enum MappingType {
   staticTypeCheck,
-  runtimeTypeCaching
+  runtimeTypeCaching;
+
+  factory MappingType.fromString(String name) {
+    switch (name) {
+      case 'staticTypeCheck':
+        return MappingType.staticTypeCheck;
+      case 'runtimeTypeCaching':
+        return MappingType.runtimeTypeCaching;
+      default:
+        throw Exception('Invalid enum value');
+    }
+  }
 }
 
 class FactoryConfig {
@@ -24,6 +35,10 @@ class FactoryConfig {
   const FactoryConfig(this.mappingType);
 
   static const FactoryConfig standart = FactoryConfig(MappingType.staticTypeCheck);
+
+  factory FactoryConfig.fromMap(Map<String, dynamic> map) => FactoryConfig(
+    MappingType.fromString(map['mappingType'])
+  );
 }
 
 class ModelMapperFactory {
