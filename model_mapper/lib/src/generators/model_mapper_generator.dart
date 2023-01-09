@@ -9,7 +9,6 @@ class ModelMapperGenerator extends GeneratorForAnnotation<ModelMapperModel> {
   @override
   Future<String> generateForAnnotatedElement(Element element, ConstantReader annotation, BuildStep buildStep) async {
     final generator = MapperTemplateGenerator(element, annotation);
-
     return generator.generate();
   }
 }

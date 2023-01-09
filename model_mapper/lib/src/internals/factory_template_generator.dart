@@ -8,16 +8,23 @@ import 'package:source_gen/source_gen.dart';
 class FactoryTemplateGenerator extends TemplateGenerator {
   FactoryTemplateGenerator(this.element, this.annotation) : super() {
     var configObj = annotation.read('config').objectValue; 
-    var fields = (configObj.type as InterfaceType).accessors.where((element) => 
-      !element.isStatic && element.isGetter && element.isPublic
-    ).map((e) => e.name);
-    var map = Map.fromEntries(fields.map((e) => MapEntry(e, configObj.getField(e)!.variable!.name)));
-    _config = FactoryConfig.fromMap(map);
+    var objEntries = (configObj.type as InterfaceType).accessors
+      .where((element) => 
+        !element.isStatic && element.isGetter && element.isPublic)
+      .map((e) => MapEntry(e.name, configObj.getField(e.name)!.variable!.name));
+    _config = FactoryConfig.fromMap(Map.fromEntries(objEntries));
   }
 
   @override
   String generate() {
     final targetName = '\$${element.name}_get';
+
+    for (var model in _modelClasses) {
+      final import = model.librarySource.fullName;
+      if (import != element.librarySource?.fullName) {
+        withImport(import);
+      }
+    }
 
     addMethod(targetName, Type.fromName('IModelFactory<T>'))
       ..withGeneric('T extends IModelBase')
@@ -29,18 +36,18 @@ class FactoryTemplateGenerator extends TemplateGenerator {
   String _generateStaticMapper() {
     var builder = TokenBuilder();
     builder
-      .writeToken('switch')
-      .writeToken('(T)')
-      .startObjectBody();
+      ..writeToken('switch')
+      ..writeToken('(T)')
+      ..startObjectBody();
     
     for (var model in _modelClasses) {
       builder
-        .writeToken('case')
-        .writeToken(model.name)
-        .writeToken(':')
-        .writeToken('return')
-        .writeToken('\$${model.name}_ModelFactory()')
-        .writeExpression('as IModelFactory<T>;');
+        ..writeToken('case')
+        ..writeToken(model.name)
+        ..writeToken(':')
+        ..writeToken('return')
+        ..writeToken('\$${model.name}_ModelFactory()')
+        ..writeExpression('as IModelFactory<T>;');
     }
     builder.writeExpression('default: throw \'ModelMapper Error\';');
     builder.endObjectBody();

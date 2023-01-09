@@ -2,43 +2,36 @@
 
 class TokenBuilder {
   
-  TokenBuilder writeToken(String token) {
+  void writeToken(String token) {
     _buffer.write(token);
     _buffer.write(' ');
-    return this;
   }
 
-  TokenBuilder writeString(String token) {
+  void writeString(String token) {
     _buffer.write('\'');
     _buffer.write(token);
     _buffer.write('\'');
-    return this;
   }
 
-  TokenBuilder writeTokenColonSepareted(String token) {
+  void writeTokenColonSepareted(String token) {
     _buffer.write(token);
     _buffer.write(', ');
-    return this;
   }
 
-  TokenBuilder writeExpression(String token) {
+  void writeExpression(String token) {
     _buffer.writeln(token);
-    return this;
   }
 
-  TokenBuilder endLine() {
+  void endLine() {
     _buffer.writeln(';');
-    return this;
   }
 
-  TokenBuilder startObjectBody() {
+  void startObjectBody() {
     _buffer.writeln('{');
-    return this;
   }
 
-  TokenBuilder endObjectBody() {
+  void endObjectBody() {
     _buffer.writeln('}');
-    return this;
   }
 
   @override
@@ -113,32 +106,32 @@ class MethodGenerator implements MethodDefinition, ITemplate {
   @override
   void build(TokenBuilder builder) {
     builder
-      .writeToken(returnType.name)
-      .writeToken(name);
+      ..writeToken(returnType.name)
+      ..writeToken(name);
     if (genericsArguments.isNotEmpty) {
       builder.writeToken('<');
       for (var i = 0; i < genericsArguments.length - 1; i++) {
         builder.writeTokenColonSepareted(genericsArguments.elementAt(i));
       }
       builder
-        .writeToken(genericsArguments.last)
-        .writeToken('>');
+        ..writeToken(genericsArguments.last)
+        ..writeToken('>');
     }
     builder.writeToken('(');
     if (arguments.isNotEmpty) {
       for (var i = 0; i < arguments.length - 1; i++) {
         final arg = arguments.elementAt(i);
         builder
-          .writeToken(arg.key.name)
-          .writeTokenColonSepareted(arg.value);
+          ..writeToken(arg.key.name)
+          ..writeTokenColonSepareted(arg.value);
       }
       builder.writeToken(genericsArguments.last);
     }
     builder
-      .writeToken(')')
-      .startObjectBody()
-      .writeExpression(body)
-      .endObjectBody();
+      ..writeToken(')')
+      ..startObjectBody()
+      ..writeExpression(body)
+      ..endObjectBody();
   }
 
   void withBody(String body) => _body = body;
@@ -175,12 +168,12 @@ class ClassGenerator implements ClassDefinition, ITemplate {
   @override
   void build(TokenBuilder builder) {
     builder
-      .writeToken('class')
-      .writeToken(name);
+      ..writeToken('class')
+      ..writeToken(name);
     if (superClass != null) {
       builder
-        .writeToken('extends')
-        .writeToken(superClass!.name);
+        ..writeToken('extends')
+        ..writeToken(superClass!.name);
     }
     if (_interfaces.isNotEmpty) {
       builder.writeToken('implements');
@@ -239,9 +232,9 @@ class TemplateGenerator {
 
     for (var import in _imports) {
       builder
-        .writeToken('import')
-        .writeString(import)
-        .endLine();
+        ..writeToken('import')
+        ..writeString(import)
+        ..endLine();
     }
     for (var declaration in _topLevelDeclarations) {
       builder
