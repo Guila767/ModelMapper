@@ -3,7 +3,7 @@ targets:
     builders:
       model_mapper|model_mapper_generator:
         generate_for:
-          - test/generator.dart
+          - test/generator_test.dart
 
 builders:
   model_mapper_generator:
