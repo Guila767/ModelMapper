@@ -20,9 +20,14 @@ class FactoryLibraryGenerator extends GeneratorForAnnotation<ModelMapperFactory>
     final models = await getModelClasses(buildStep);
     for (final model in models) {
       var modelAsset = await buildStep.resolver.assetIdForElement(model);
-      paths.add(
-        path.join('package:${modelAsset.package}', path.joinAll(modelAsset.pathSegments.skip(1)))
-      );
+      if (['lib', 'bin'].any((element) => modelAsset.pathSegments[0] == element)) {
+        paths.add(
+          path.join('package:${modelAsset.package}', path.joinAll(modelAsset.pathSegments.skip(1)))
+        );
+        continue;
+      } 
+      // Other paths than lib and bin may not be visible to the package
+      paths.add(path.join('../', modelAsset.path));
     }
     final tb = TokenBuilder();
     for (final path in paths) {
