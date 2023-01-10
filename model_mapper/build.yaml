@@ -12,4 +12,11 @@ builders:
     build_extensions: {".dart": [".model_mapper.g.dart"]}
     auto_apply: dependents
     build_to: cache
-    applies_builders: ["source_gen|combining_builder"]
+    applies_builders: ["source_gen|combining_builder", "model_mapper|factory_library_generator"]
+  
+  factory_library_generator:
+    import: "package:model_mapper/builder.dart"
+    builder_factories: ["factoryLibraryGenerator"]
+    build_extensions: {".dart": [".factory_library.g.dart"]}
+    auto_apply: none
+    build_to: source
