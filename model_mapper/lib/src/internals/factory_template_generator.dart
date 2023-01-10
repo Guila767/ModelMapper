@@ -19,13 +19,6 @@ class FactoryTemplateGenerator extends TemplateGenerator {
   String generate() {
     final targetName = '\$${element.name}_get';
 
-    for (var model in _modelClasses) {
-      final import = model.librarySource.fullName;
-      if (import != element.librarySource?.fullName) {
-        withImport(import);
-      }
-    }
-
     addMethod(targetName, Type.fromName('IModelFactory<T>'))
       ..withGeneric('T extends IModelBase')
       ..withBody(_generateStaticMapper());
