@@ -12,5 +12,11 @@ environment:
 dev_dependencies:
   lints: ^2.0.0
   test: ^1.16.0
+  build_test: any
 dependencies:
   source_gen: ^1.2.6
+  build: any
+  analyzer: any
+  build_runner: ^2.3.3
+  glob: ^2.1.1
+  path: ^1.8.3

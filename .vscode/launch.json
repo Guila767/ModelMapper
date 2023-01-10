@@ -5,10 +5,24 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "model_mapper",
+            "name": "example",
             "request": "launch",
             "type": "dart",
-            "program": "example/model_mapper_example.dart"
+            "program": "example/bin/example.dart"
+        },
+        {
+            "name": "Debug Generator",
+            "request": "launch",
+            "program": "model_mapper/.dart_tool/build/entrypoint/build.dart",
+            "type": "dart",
+            "args": ["build", "--delete-conflicting-outputs"]
+        },
+        {
+            "name": "Example - Debug Generator",
+            "request": "launch",
+            "program": "example/.dart_tool/build/entrypoint/build.dart",
+            "type": "dart",
+            "args": ["build", "--delete-conflicting-outputs"]
         }
     ]
 }
