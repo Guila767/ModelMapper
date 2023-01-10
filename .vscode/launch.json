@@ -11,7 +11,7 @@
             "program": "example/bin/example.dart"
         },
         {
-            "name": "Debug Generator",
+            "name": "Test - Debug Generator",
             "request": "launch",
             "program": "model_mapper/.dart_tool/build/entrypoint/build.dart",
             "type": "dart",
