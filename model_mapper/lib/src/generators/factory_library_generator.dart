@@ -7,7 +7,7 @@ import 'package:build/build.dart';
 import 'package:model_mapper/src/internals/template_generators/template_generator.dart';
 import 'package:model_mapper/src/internals/utils.dart';
 import 'package:model_mapper/src/model_mapper_base.dart';
-import 'package:path/path.dart' as Path;
+import 'package:path/path.dart' as p;
 
 import 'package:source_gen/source_gen.dart';
 
@@ -15,7 +15,7 @@ class FactoryLibraryGenerator extends GeneratorForAnnotation<ModelMapperFactory>
   
   @override
   FutureOr<String> generateForAnnotatedElement(Element element, ConstantReader annotation, BuildStep buildStep) async {
-    final path = Path.Context(style: Path.Style.posix);
+    final path = p.Context(style: p.Style.posix);
     final paths = HashSet<String>();
     var models = await getModelClasses(buildStep);
     if (await element.isUnitTest(buildStep)) {

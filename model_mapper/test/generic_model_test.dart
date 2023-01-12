@@ -47,7 +47,7 @@ class ModelB implements ModelBase<ModelA> {
   @override
   final String name;
   ModelB(this.data, this.name);
-  
+  @override
   Map<String, dynamic> toMap() => {
     'data': data.toMap(),
     'name': name

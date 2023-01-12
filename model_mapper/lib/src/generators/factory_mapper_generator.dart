@@ -1,14 +1,10 @@
 import 'dart:async';
-import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/element/type.dart';
-import 'package:glob/glob.dart';
-import 'package:model_mapper/src/internals/template_generators/template_generator.dart';
-import 'package:path/path.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
 import 'package:model_mapper/model_mapper.dart';
-import 'package:model_mapper/src/internals/factory_template_generator.dart';
+import 'package:model_mapper/src/internals/template_generators/factory_template_generator.dart';
 import 'package:model_mapper/src/internals/utils.dart';
 
 class FactoryMapperGenerator extends GeneratorForAnnotation<ModelMapperFactory> {
