@@ -30,20 +30,20 @@ enum MappingType {
 }
 
 class FactoryConfig {
-  final MappingType mappingType;
+  final MappingType? mappingType;
+  final bool allowGenericModelMapping;
 
-  const FactoryConfig(this.mappingType);
-
-  static const FactoryConfig standart = FactoryConfig(MappingType.staticTypeCheck);
+  const FactoryConfig({this.mappingType, this.allowGenericModelMapping = false});
 
   factory FactoryConfig.fromMap(Map<String, dynamic> map) => FactoryConfig(
-    MappingType.fromString(map['mappingType'])
+    mappingType: map['mappingType'] != null ? MappingType.fromString(map['mappingType']) : null,
+    allowGenericModelMapping: map['allowGenericModelMapping']
   );
 }
 
 class ModelMapperFactory {
   final FactoryConfig config;
-  const ModelMapperFactory([this.config = FactoryConfig.standart]);
+  const ModelMapperFactory([this.config = const FactoryConfig()]);
 }
 
 class ModelMapperModel {

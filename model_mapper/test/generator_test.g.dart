@@ -15,7 +15,7 @@ class $ModelTest_ModelFactory implements IModelFactory<ModelTest> {
 // FactoryMapperGenerator
 // **************************************************************************
 
-IModelFactory<T> $TestFactory_get<T extends IModelBase>() {
+IModelFactory<T> _$TestFactoryGet<T extends IModelBase>() {
   switch (T) {
     case ModelTest:
       return $ModelTest_ModelFactory() as IModelFactory<T>;

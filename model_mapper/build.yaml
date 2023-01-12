@@ -4,6 +4,7 @@ targets:
       model_mapper|model_mapper_generator:
         generate_for:
           - test/generator_test.dart
+          - test/generic_model_test.dart
 
 builders:
   model_mapper_generator:
