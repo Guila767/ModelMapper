@@ -26,3 +26,14 @@ extension BuildStepExtensions on BuildStep {
     return classes;
   }
 }
+
+extension ClassElementExtensions on ClassElement {
+  bool get isGeneric => typeParameters.isNotEmpty;
+}
+
+extension ElementExtensions on Element {
+  Future<bool> isUnitTest(BuildStep buildStep) async {
+    final assetId = await buildStep.resolver.assetIdForElement(this);
+    return assetId.pathSegments.first == 'test';
+  }
+}

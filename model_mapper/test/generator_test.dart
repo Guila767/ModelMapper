@@ -6,7 +6,7 @@ part 'generator_test.g.dart';
 @ModelMapperFactory()
 class TestFactory implements IModelMapperFactory {
   @override
-  IModelFactory<T> get<T extends IModelBase>() => $TestFactory_get<T>();
+  IModelFactory<T> get<T extends IModelBase>() => _$TestFactoryGet<T>();
 }
 
 @ModelMapperModel()

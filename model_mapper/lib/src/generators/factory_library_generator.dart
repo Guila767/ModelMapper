@@ -17,7 +17,12 @@ class FactoryLibraryGenerator extends GeneratorForAnnotation<ModelMapperFactory>
   FutureOr<String> generateForAnnotatedElement(Element element, ConstantReader annotation, BuildStep buildStep) async {
     final path = Path.Context(style: Path.Style.posix);
     final paths = HashSet<String>();
-    final models = await getModelClasses(buildStep);
+    var models = await getModelClasses(buildStep);
+    if (await element.isUnitTest(buildStep)) {
+      models = models
+        .where((klass) => klass.library == element.library)
+        .toList();
+    }
     for (final model in models) {
       var modelAsset = await buildStep.resolver.assetIdForElement(model);
       if (['lib', 'bin'].any((element) => modelAsset.pathSegments[0] == element)) {
